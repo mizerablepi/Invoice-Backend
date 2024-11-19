@@ -53,7 +53,7 @@ async def getauth(db:dbSession, current_user: Annotated[UserSchema,Depends(get_c
 
 
 @router.post("/doclogin")
-async def doclogin( db: dbSession, form_data:OAuth2PasswordRequestForm):
+async def doclogin( db: dbSession, form_data:Annotated[OAuth2PasswordRequestForm,Depends()]):
     user = await authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
