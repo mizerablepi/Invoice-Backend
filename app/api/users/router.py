@@ -7,7 +7,6 @@ from typing import Annotated
 from sqlalchemy import select
 from app.utils.auth import authenticate_user, create_access_token, get_password_hash, get_current_user
 from datetime import timedelta
-from fastapi.security import OAuth2PasswordRequestForm
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 router = APIRouter(
@@ -16,7 +15,7 @@ router = APIRouter(
 )
 
 @router.post("/login")
-async def login( db: dbSession, form_data:Annotated[OAuth2PasswordRequestForm,Depends()]):
+async def login( db: dbSession, form_data:UserLogin):
     user = await authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
