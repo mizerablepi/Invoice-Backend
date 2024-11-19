@@ -45,7 +45,7 @@ async def get(db:dbSession):
     return users
 
 @router.get("/auth", response_model=list[UserSchema])
-async def getauth(db:dbSession, current_user: Annotated[UserSchema,get_current_user]):
+async def getauth(db:dbSession, current_user: Annotated[UserSchema,Depends(get_current_user)]):
     result = await db.execute(select(User))
     users = result.scalars().all()
     return users

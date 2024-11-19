@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 class UserBase(BaseModel):
     username: str
@@ -11,4 +11,5 @@ class UserLogin(BaseModel):
     password:str
 
 class UserSchema(UserBase,UserLogin):
+    model_config = ConfigDict(from_attributes=True)
     pass
